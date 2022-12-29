@@ -84,8 +84,10 @@ public class RandomTeleporter {
     private Location findGround(Location location) {
         while (location.getY() > 61) {
             location.add(0, -1, 0);
-            Block block = location.getBlock();
-            if (!block.getType().isSolid() && !block.getRelative(BlockFace.UP).isSolid() && block.getRelative(BlockFace.DOWN).isSolid()) {
+            Block at = location.getBlock();
+            Block up = at.getRelative(BlockFace.UP);
+            Block down = at.getRelative(BlockFace.DOWN);
+            if (!at.isSolid() && !up.isSolid() && down.isSolid() && !isOnLeaves(location)) {
                 return location;
             }
         }
