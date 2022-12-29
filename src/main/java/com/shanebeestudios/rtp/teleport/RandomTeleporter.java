@@ -1,5 +1,6 @@
 package com.shanebeestudios.rtp.teleport;
 
+import com.google.common.collect.ImmutableSet;
 import com.shanebeestudios.rtp.RandomTeleport;
 import com.shanebeestudios.rtp.config.Config;
 import com.shanebeestudios.rtp.util.Utils;
@@ -89,6 +90,23 @@ public class RandomTeleporter {
         return null;
     }
 
+    /**
+     * Blocks the player should not spawn on/in
+     */
+    private final ImmutableSet<Material> OUCHIE_BLOCKS = ImmutableSet.<Material>builder()
+            .add(Material.CACTUS)
+            .add(Material.CAMPFIRE)
+            .add(Material.FIRE)
+            .add(Material.LAVA)
+            .add(Material.MAGMA_BLOCK)
+            .add(Material.POINTED_DRIPSTONE)
+            .add(Material.SOUL_CAMPFIRE)
+            .add(Material.SOUL_FIRE)
+            .add(Material.SWEET_BERRY_BUSH)
+            .add(Material.WATER)
+            .build();
+
+    @SuppressWarnings("RedundantIfStatement")
     private boolean isSafe(Location location) {
         Block at = location.getBlock();
         Block up = at.getRelative(BlockFace.UP);
@@ -96,10 +114,12 @@ public class RandomTeleporter {
         if (!at.isSolid() && !up.isSolid() && down.isSolid()) {
             Material downType = down.getType();
             Material atType = at.getType();
-            if (Tag.LEAVES.isTagged(downType)) {
-                return false;
-            }
-            return downType != Material.WATER && downType != Material.LAVA && atType != Material.WATER && atType != Material.LAVA;
+            if (Tag.LEAVES.isTagged(downType)) return false;
+            if (Tag.PRESSURE_PLATES.isTagged(downType)) return false;
+            if (OUCHIE_BLOCKS.contains(downType)) return false;
+            if (OUCHIE_BLOCKS.contains(atType)) return false;
+
+            return true;
         }
         return false;
     }
