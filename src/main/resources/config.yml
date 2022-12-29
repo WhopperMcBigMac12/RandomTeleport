@@ -1,0 +1,28 @@
+# Main config for RandomTeleport
+
+plugin:
+  prefix: "&7[&bRTP&7]"
+
+teleporter:
+  # Max distance in either direction x/y
+  # Will also account for +/-
+  max_distance:
+    world: 50000
+    world_nether: 50000
+    world_the_end: 50000
+
+  # Max y (up/down) value to teleport to
+  max_y:
+    world: 200
+    world_nether: 127
+    world_the_end: 200
+
+  # Min y (up/down) value to teleport to
+  min_y:
+    world: 61
+    world_nether: 0
+    world_the_end: 0
+
+  # The amount of times the teleporter will
+  # retry when not finding a suitable location
+  max_retries: 10
