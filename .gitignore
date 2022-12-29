@@ -1,2 +1,16 @@
 # Project exclude paths
 /target/
+/dependency-reduced-pom.xml
+/.idea/
+/RandomTeleport.iml
+
+# Compiled class file
+*.class
+
+/.gradle/
+/.settings/
+.project
+.classpath
+/build/
+/bin/
+src/.DS_Store
