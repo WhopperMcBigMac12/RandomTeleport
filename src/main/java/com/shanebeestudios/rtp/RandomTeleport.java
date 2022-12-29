@@ -2,6 +2,7 @@ package com.shanebeestudios.rtp;
 
 import com.shanebeestudios.rtp.command.RTPCommand;
 import com.shanebeestudios.rtp.config.Config;
+import com.shanebeestudios.rtp.util.UpdateChecker;
 import com.shanebeestudios.rtp.util.Utils;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -18,6 +19,9 @@ public class RandomTeleport extends JavaPlugin {
         Utils.log("Loading...");
 
         this.config = new Config(this);
+        if (this.config.checkForUpdates()) {
+            new UpdateChecker(this);
+        }
 
         registerCommands();
 

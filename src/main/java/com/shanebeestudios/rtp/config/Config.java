@@ -62,6 +62,8 @@ public class Config {
     }
 
     private String prefix;
+    private boolean debug;
+    private boolean update;
     private final Map<String, Integer> maxDistances = new HashMap<>();
     private final Map<String, Integer> maxY = new HashMap<>();
     private final Map<String, Integer> minY = new HashMap<>();
@@ -70,6 +72,8 @@ public class Config {
     @SuppressWarnings("ConstantConditions")
     private void loadConfigs() {
         this.prefix = config.getString("plugin.prefix");
+        this.debug = config.getBoolean("plugin.debug");
+        this.update = config.getBoolean("plugin.check_update");
         for (String key : config.getConfigurationSection("teleporter.max_distance").getKeys(false)) {
             int value = config.getInt("teleporter.max_distance." + key);
             maxDistances.put(key, value);
@@ -88,6 +92,14 @@ public class Config {
 
     public String getPrefix() {
         return prefix;
+    }
+
+    public boolean isDebug() {
+        return debug;
+    }
+
+    public boolean checkForUpdates() {
+        return update;
     }
 
     public Map<String, Integer> getMaxDistances() {

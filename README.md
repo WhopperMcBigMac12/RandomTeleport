@@ -12,3 +12,4 @@ World = Pick a world to randomly teleport to (optional)
 `randomteleport.command.rtp` base permission for command   
 `randomteleport.command.rtp.other` permission to tp another player   
 `randomteleport.command.rtp.world` permission to choose world to tp to   
+`randomteleport.update.check` permission to send update info in game   

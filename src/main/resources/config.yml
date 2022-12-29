@@ -1,7 +1,13 @@
 # Main config for RandomTeleport
 
 plugin:
+  # Prefix for in-game messages
+  # Will not affect console messages
   prefix: "&7[&bRTP&7]"
+  # Send more verbose debug messages in console when problems occur
+  debug: false
+  # Whether to check for updates
+  check_update: true
 
 teleporter:
   # Max distance in either direction x/y from 0/0
