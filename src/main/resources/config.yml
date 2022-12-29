@@ -4,7 +4,7 @@ plugin:
   prefix: "&7[&bRTP&7]"
 
 teleporter:
-  # Max distance in either direction x/y
+  # Max distance in either direction x/y from 0/0
   # Will also account for +/-
   max_distance:
     world: 50000
