@@ -5,3 +5,4 @@ api-version: 1.13
 commands:
   rtp:
     description: Main command for RTP
+    permission: randomteleport.command.rtp

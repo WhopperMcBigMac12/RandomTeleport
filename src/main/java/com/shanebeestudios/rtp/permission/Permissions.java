@@ -8,7 +8,6 @@ import org.bukkit.plugin.PluginManager;
 
 public class Permissions {
 
-    public static final Permissions COMMAND_RTP = get("command.rtp", true);
     public static final Permissions COMMAND_RTP_OTHER = get("command.rtp.other", false);
     public static final Permissions COMMAND_RTP_WORLD = get("command.rtp.world", false);
 
