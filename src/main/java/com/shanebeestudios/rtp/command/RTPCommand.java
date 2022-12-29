@@ -20,7 +20,7 @@ public class RTPCommand implements TabExecutor {
         if (sender instanceof Player player) {
             teleporter.rtp(player);
         } else {
-            Utils.sendMsg(sender, "&7This is a player only command");
+            Utils.sendMsg(sender, "&cThis is a player only command");
         }
         return true;
     }
