@@ -29,8 +29,10 @@ public class RandomTeleporter {
     public void rtp(Player player) {
         World world = player.getWorld();
 
+        Utils.sendMsg(player, "Looking for a suitable location...");
         getSafeLocation(world).thenApply(location -> {
             if (location != null) {
+                Utils.sendMsg(player, "&aFound a suitable location!");
                 player.teleportAsync(location);
             } else {
                 Utils.sendMsg(player, "&cCouldn't find a suitable location!");
