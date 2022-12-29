@@ -26,8 +26,7 @@ public class RandomTeleporter {
         this.config = plugin.getPluginConfig();
     }
 
-    public void rtp(Player player) {
-        World world = player.getWorld();
+    public void rtp(Player player, World world) {
 
         Utils.sendMsg(player, "Looking for a suitable location...");
         getSafeLocation(world).thenApply(location -> {
