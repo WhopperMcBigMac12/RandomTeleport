@@ -2,6 +2,9 @@ name: RandomTeleport
 main: com.shanebeestudios.rtp.RandomTeleport
 version: '${project.version}'
 api-version: 1.13
+author: ShaneBee
+website: https://github.com/ShaneBeee/RandomTeleport
+description: A simple plugin to teleport a player to a random location
 commands:
   rtp:
     description: Main command for RTP
