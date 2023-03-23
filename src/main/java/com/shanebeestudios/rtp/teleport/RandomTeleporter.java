@@ -22,18 +22,25 @@ import java.util.function.Function;
 public class RandomTeleporter {
 
     private final Config config;
+    private boolean teleportingFilter;
 
     public RandomTeleporter(RandomTeleport plugin) {
         this.config = plugin.getPluginConfig();
+        plugin.getServer().getLogger().setFilter(record -> {
+            if (record.getMessage().contains("moved too quickly")) {
+                return !teleportingFilter;
+            }
+            return true;
+        });
     }
 
     public void rtp(Player player, World world) {
-
         Utils.sendMsg(player, "Looking for a suitable location...");
         getSafeLocation(world).thenApply(location -> {
             if (location != null) {
                 Utils.sendMsg(player, "&aFound a suitable location!");
-                player.teleportAsync(location);
+                this.teleportingFilter = true;
+                player.teleportAsync(location).thenAccept(a -> this.teleportingFilter = false);
             } else {
                 Utils.sendMsg(player, "&cCouldn't find a suitable location!");
             }
