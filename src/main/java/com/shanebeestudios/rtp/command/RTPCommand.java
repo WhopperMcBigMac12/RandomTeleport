@@ -22,35 +22,35 @@ public class RTPCommand {
 
     private void registerCommand(RandomTeleporter teleporter) {
         new CommandTree("randomteleport")
-                .withAliases("rtp")
+            .withAliases("rtp")
+            .executesPlayer(info -> {
+                Player sender = info.sender();
+                teleporter.rtp(sender, sender.getWorld());
+            })
+            .then(new WorldArgument("world")
+                .withPermission(Permissions.COMMAND_RTP_WORLD.permission())
                 .executesPlayer(info -> {
                     Player sender = info.sender();
-                    teleporter.rtp(sender, sender.getWorld());
-                })
+                    World world = (World) info.args().get("world");
+                    teleporter.rtp(sender, world);
+                }))
+            .then(new EntitySelectorArgument.ManyPlayers("players")
+                .withPermission(Permissions.COMMAND_RTP_OTHER.permission())
                 .then(new WorldArgument("world")
-                        .withPermission(Permissions.COMMAND_RTP_WORLD.permission())
-                        .executesPlayer(info -> {
-                            Player sender = info.sender();
-                            World world = (World) info.args().get("world");
-                            teleporter.rtp(sender, world);
-                        }))
-                .then(new EntitySelectorArgument.ManyPlayers("players")
-                        .withPermission(Permissions.COMMAND_RTP_OTHER.permission())
-                        .then(new WorldArgument("world")
-                                .setOptional(true)
-                                .executes((sender, args) -> {
+                    .setOptional(true)
+                    .executes((sender, args) -> {
 
-                                    @SuppressWarnings("unchecked")
-                                    Collection<Player> players = (Collection<Player>) args.get("players");
-                                    assert players != null;
-                                    players.forEach(player -> {
-                                        World world = (World) args.getOrDefault("world", player.getWorld());
-                                        if (player != sender) sendOther(player, sender, world);
-                                        teleporter.rtp(player, world);
-                                    });
-                                })))
+                        @SuppressWarnings("unchecked")
+                        Collection<Player> players = (Collection<Player>) args.get("players");
+                        assert players != null;
+                        players.forEach(player -> {
+                            World world = (World) args.getOrDefault("world", player.getWorld());
+                            if (player != sender) sendOther(player, sender, world);
+                            teleporter.rtp(player, world);
+                        });
+                    })))
 
-                .register();
+            .register();
     }
 
     private void sendOther(Player player, CommandSender sender, @NotNull World world) {
