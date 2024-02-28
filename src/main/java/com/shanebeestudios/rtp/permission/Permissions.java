@@ -6,12 +6,13 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.PluginManager;
 
-public class Permissions {
+public record Permissions(String permission) {
 
     public static final Permissions UPDATE_CHECK = get("update.check", false);
     public static final Permissions COMMAND_RTP_OTHER = get("command.rtp.other", false);
     public static final Permissions COMMAND_RTP_WORLD = get("command.rtp.world", false);
 
+    @SuppressWarnings("SameParameterValue")
     private static Permissions get(String permission, boolean defaultPerm) {
         String perm = "randomteleport." + permission;
         PluginManager pluginManager = Bukkit.getPluginManager();
@@ -21,12 +22,6 @@ public class Permissions {
             pluginManager.addPermission(bukkitPerm);
         }
         return new Permissions(perm);
-    }
-
-    String permission;
-
-    public Permissions(String permission) {
-        this.permission = permission;
     }
 
     public boolean check(Permissible permissible) {

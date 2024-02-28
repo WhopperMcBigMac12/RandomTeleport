@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 
+@SuppressWarnings({"CallToPrintStackTrace", "deprecation"})
 public class UpdateChecker implements Listener {
 
     private String updateVersion;

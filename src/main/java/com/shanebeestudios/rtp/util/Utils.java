@@ -5,11 +5,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
+@SuppressWarnings("unused")
 public class Utils {
 
     private static final String CONSOLE_PREFIX = "&7[&bRTP&7] ";
     private static String PREFIX;
 
+    @SuppressWarnings("deprecation")
     private static String getColored(String message) {
         return ChatColor.translateAlternateColorCodes('&', message);
     }

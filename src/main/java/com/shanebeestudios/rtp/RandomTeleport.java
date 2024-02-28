@@ -4,6 +4,9 @@ import com.shanebeestudios.rtp.command.RTPCommand;
 import com.shanebeestudios.rtp.config.Config;
 import com.shanebeestudios.rtp.util.UpdateChecker;
 import com.shanebeestudios.rtp.util.Utils;
+import dev.jorel.commandapi.CommandAPI;
+import dev.jorel.commandapi.CommandAPIBukkitConfig;
+import dev.jorel.commandapi.exceptions.UnsupportedVersionException;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,6 +15,15 @@ public class RandomTeleport extends JavaPlugin {
     private static RandomTeleport pluginInstance;
     private Config config;
 
+    @Override
+    public void onLoad() {
+        try {
+            CommandAPI.onLoad(new CommandAPIBukkitConfig(this).verboseOutput(false));
+        } catch (UnsupportedVersionException ignore) {
+        }
+    }
+
+    @SuppressWarnings("deprecation")
     @Override
     public void onEnable() {
         long start = System.currentTimeMillis();
@@ -23,15 +35,11 @@ public class RandomTeleport extends JavaPlugin {
             new UpdateChecker(this);
         }
 
-        registerCommands();
+        CommandAPI.onEnable();
+        new RTPCommand(this);
 
         float finish = (float) (System.currentTimeMillis() - start) / 1000;
         Utils.log("&aSuccessfully enabled v%s &7in &b%.2f seconds", getDescription().getVersion(), finish);
-    }
-
-    @SuppressWarnings("ConstantConditions")
-    private void registerCommands() {
-        getCommand("rtp").setExecutor(new RTPCommand(this));
     }
 
     @NotNull
@@ -48,6 +56,12 @@ public class RandomTeleport extends JavaPlugin {
             throw new IllegalArgumentException("Plugin instance is null!");
         }
         return pluginInstance;
+    }
+
+    @Override
+    public void onDisable() {
+        CommandAPI.unregister("randomteleport");
+        CommandAPI.onDisable();
     }
 
 }
