@@ -55,8 +55,8 @@ public class RandomTeleporter {
                     this.teleportingPlayers.add(playerName);
                 }
                 player.teleportAsync(location).thenAccept(a ->
-                        bukkitScheduler.runTaskLater(this.plugin,
-                                () -> teleportingPlayers.remove(playerName), 5));
+                    bukkitScheduler.runTaskLater(this.plugin,
+                        () -> teleportingPlayers.remove(playerName), 5));
             } else {
                 Utils.sendMsg(player, "&cCouldn't find a suitable location!");
             }
@@ -69,8 +69,8 @@ public class RandomTeleporter {
         int maxRetries = this.config.getMaxRetries();
         for (int i = 0; i < maxRetries; i++) {
             future = future.thenApply(CompletableFuture::completedFuture)
-                    .exceptionally(t -> getRandomLocation(world))
-                    .thenCompose(Function.identity());
+                .exceptionally(t -> getRandomLocation(world))
+                .thenCompose(Function.identity());
         }
         return future;
     }
@@ -117,17 +117,17 @@ public class RandomTeleporter {
      * Blocks the player should not spawn on/in
      */
     private final ImmutableSet<Material> OUCHIE_BLOCKS = ImmutableSet.<Material>builder()
-            .add(Material.CACTUS)
-            .add(Material.CAMPFIRE)
-            .add(Material.FIRE)
-            .add(Material.LAVA)
-            .add(Material.MAGMA_BLOCK)
-            .add(Material.POINTED_DRIPSTONE)
-            .add(Material.SOUL_CAMPFIRE)
-            .add(Material.SOUL_FIRE)
-            .add(Material.SWEET_BERRY_BUSH)
-            .add(Material.WATER)
-            .build();
+        .add(Material.CACTUS)
+        .add(Material.CAMPFIRE)
+        .add(Material.FIRE)
+        .add(Material.LAVA)
+        .add(Material.MAGMA_BLOCK)
+        .add(Material.POINTED_DRIPSTONE)
+        .add(Material.SOUL_CAMPFIRE)
+        .add(Material.SOUL_FIRE)
+        .add(Material.SWEET_BERRY_BUSH)
+        .add(Material.WATER)
+        .build();
 
     @SuppressWarnings("RedundantIfStatement")
     private boolean isSafe(Location location) {
