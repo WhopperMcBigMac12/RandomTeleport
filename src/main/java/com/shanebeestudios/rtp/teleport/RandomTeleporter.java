@@ -13,6 +13,7 @@ import org.apache.logging.log4j.core.Logger;
 import org.apache.logging.log4j.core.filter.AbstractFilter;
 import org.apache.logging.log4j.message.Message;
 import org.bukkit.Bukkit;
+import org.bukkit.HeightMap;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -99,13 +100,17 @@ public class RandomTeleporter {
 
     @Nullable
     private Location getHighestSafeLocation(World world, Location location) {
-        int min = getMinY(world);
         int max = getMaxY(world);
-        Location loc = location.clone();
+        Location loc;
+        if (world.getEnvironment() == Environment.NETHER) {
+            loc = location.clone();
+            loc.setY(world.getMinHeight());
+        } else {
+            loc = world.getHighestBlockAt(location, HeightMap.MOTION_BLOCKING_NO_LEAVES).getLocation();
+        }
 
-        loc.setY(max);
-        while (loc.getY() > min) {
-            loc.add(0, -1, 0);
+        while (loc.getY() < max) {
+            loc.add(0, 1, 0);
             if (isSafe(loc)) {
                 return loc;
             }
@@ -123,6 +128,7 @@ public class RandomTeleporter {
         .add(Material.LAVA)
         .add(Material.MAGMA_BLOCK)
         .add(Material.POINTED_DRIPSTONE)
+        .add(Material.POWDER_SNOW)
         .add(Material.SOUL_CAMPFIRE)
         .add(Material.SOUL_FIRE)
         .add(Material.SWEET_BERRY_BUSH)
@@ -137,7 +143,6 @@ public class RandomTeleporter {
         if (!at.isSolid() && !up.isSolid() && down.isSolid()) {
             Material downType = down.getType();
             Material atType = at.getType();
-            if (Tag.LEAVES.isTagged(downType)) return false;
             if (Tag.PRESSURE_PLATES.isTagged(downType)) return false;
             if (OUCHIE_BLOCKS.contains(downType)) return false;
             if (OUCHIE_BLOCKS.contains(atType)) return false;
@@ -161,21 +166,11 @@ public class RandomTeleporter {
         String worldName = world.getName();
         if (maxY.containsKey(worldName)) return maxY.get(worldName);
 
-        Environment environment = world.getEnvironment();
-        if (environment == Environment.NORMAL) return 200;
-        if (environment == Environment.NETHER) return 127;
-        if (environment == Environment.THE_END) return 200;
-        return world.getMaxHeight() - 1;
-    }
-
-    private int getMinY(World world) {
-        Map<String, Integer> minY = this.config.getMinY();
-        String worldName = world.getName();
-        if (minY.containsKey(worldName)) return minY.get(worldName);
-
-        Environment environment = world.getEnvironment();
-        if (environment == Environment.NORMAL) return 61;
-        return world.getMinHeight() + 1;
+        return switch (world.getEnvironment()) {
+            case NORMAL,THE_END -> 200; // We don't need to test too high
+            case NETHER -> 127;
+            default -> world.getMaxHeight() - 1;
+        };
     }
 
     private class MessageFilter extends AbstractFilter {
