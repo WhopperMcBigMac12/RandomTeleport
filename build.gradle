@@ -29,7 +29,7 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
 
     // Command Api
-    implementation("dev.jorel:commandapi-bukkit-shade:9.3.0")
+    implementation("dev.jorel:commandapi-bukkit-shade:9.4.0")
 
     // Logging
     compileOnly("org.apache.logging.log4j:log4j-core:2.20.0")
