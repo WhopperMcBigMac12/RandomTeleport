@@ -21,7 +21,8 @@ public class RandomTeleport extends JavaPlugin {
     @Override
     public void onLoad() {
         try {
-            CommandAPI.onLoad(new CommandAPIBukkitConfig(this).verboseOutput(false).silentLogs(true));
+            CommandAPI.onLoad(new CommandAPIBukkitConfig(this)
+                .verboseOutput(false).silentLogs(true).skipReloadDatapacks(true));
             this.commandApiCanLoad = true;
         } catch (UnsupportedVersionException ignore) {
             this.commandApiCanLoad = false;
