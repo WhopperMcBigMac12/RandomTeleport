@@ -14,7 +14,7 @@ compileJava   {
 }
 
 // RandomTeleport version
-version = '1.0.2'
+version = '1.0.3'
 
 repositories {
     mavenCentral()
@@ -32,7 +32,7 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
 
     // Command Api
-    implementation("dev.jorel:commandapi-bukkit-shade:9.5.3")
+    implementation("dev.jorel:commandapi-bukkit-shade:9.6.0")
 
     // Logging
     compileOnly("org.apache.logging.log4j:log4j-core:2.20.0")
@@ -62,5 +62,5 @@ shadowJar {
 tasks.register('server', Copy) {
     from shadowJar
     // Change this to wherever you want your jar to build
-    into '/Users/ShaneBee/Desktop/Server/Skript/1-21-1/plugins'
+    into '/Users/ShaneBee/Desktop/Server/Skript/1-21-2/plugins'
 }
