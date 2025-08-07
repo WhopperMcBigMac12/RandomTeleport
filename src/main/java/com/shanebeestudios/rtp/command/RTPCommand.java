@@ -22,7 +22,6 @@ public class RTPCommand {
 
     private void registerCommand(RandomTeleporter teleporter) {
         new CommandTree("randomteleport")
-            .withAliases("rtp")
             .executesPlayer(info -> {
                 Player sender = info.sender();
                 teleporter.rtp(sender, sender.getWorld());
